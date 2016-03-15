@@ -2,7 +2,6 @@ import logging
 import json
 import requests
 import os
-from notify import Notify
 
 log = logging.getLogger("listener")
 
@@ -42,9 +41,6 @@ class Processor:
             r.raise_for_status()
             service_stack_response = r.json()
 
-            notify = Notify(service_stack_response,
-                            'started' if self.event['data']['resource']['state'] == 'active' else 'stopped')
-            notify.send()
 
             # list of running stacks, called environments in api
             r = requests.get(self.api_endpoint + '/environments',
